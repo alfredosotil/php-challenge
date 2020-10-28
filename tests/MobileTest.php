@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\Interfaces\CarrierInterface;
 use App\Mobile;
+use App\Providers\Claro;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
 
@@ -22,7 +23,7 @@ class MobileTest extends TestCase
     {
         parent::setUp();
 
-        $this->provider = \Mockery::mock(CarrierInterface::class);
+        $this->provider = \Mockery::mock(Claro::class);
     }
 
     /** @test */
@@ -31,6 +32,22 @@ class MobileTest extends TestCase
         $mobile = new Mobile($this->provider);
 
         $this->assertNull($mobile->makeCallByName(''));
+    }
+
+    /** @test */
+    public function it_returns_contact_when_name_is_provided()
+    {
+        $mobile = new Mobile($this->provider);
+
+        $this->assertNotNull($mobile->makeCallByName('alfredo'));
+    }
+
+    /** @test */
+    public function it_returns_null_when_name_is_not_found()
+    {
+        $mobile = new Mobile($this->provider);
+
+        $this->assertNull($mobile->makeCallByName('alfredo38'));
     }
 
 }

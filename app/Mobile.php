@@ -9,24 +9,27 @@ use App\Services\ContactService;
 class Mobile
 {
 
-	protected $provider;
-	
-	function __construct(CarrierInterface $provider)
-	{
-		$this->provider = $provider;
-	}
+    protected $provider;
+
+    function __construct(CarrierInterface $provider)
+    {
+        $this->provider = $provider;
+    }
 
 
-	public function makeCallByName($name = '')
-	{
-		if( empty($name) ) return;
+    public function makeCallByName($name = '')
+    {
+        if (empty($name)) return;
 
-		$contact = ContactService::findByName($name);
+        $contact = ContactService::findByName($name);
 
-		$this->provider->dialContact($contact);
+        if (is_null($contact)) {
+            return null;
+        }
 
-		return $this->provider->makeCall();
-	}
+        $this->provider->dialContact($contact);
 
+        return $this->provider->makeCall();
+    }
 
 }

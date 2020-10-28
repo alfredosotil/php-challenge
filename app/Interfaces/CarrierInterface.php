@@ -8,8 +8,8 @@ use App\Contact;
 
 interface CarrierInterface
 {
-	
-	public function dialContact(Contact $contact);
 
-	public function makeCall() : Call;
+    public function dialContact(Contact $contact);
+
+    public function makeCall(): Call;
 }
